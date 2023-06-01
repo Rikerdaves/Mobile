@@ -35,6 +35,11 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 10,
       },
+    newsList: {
+      width: '95%',
+      backgroundColor:'gray',
+      borderRadius: 10,
+    },  
     newsTitle: {
         fontSize: 24,
         fontWeight: 'bold',

@@ -22,8 +22,10 @@ const NewsCard = ({ article, onPress }) => {
 
 const styles = StyleSheet.create({
   container: {
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: 10,
-    borderBottomWidth: 1,
+    borderBottomWidth: 10,
     borderBottomColor: '#ccc',
   },
   image: {
@@ -38,7 +40,7 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: 14,
-    color: '#888',
+    color: 'white',
   },
 });
 
