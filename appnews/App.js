@@ -57,9 +57,9 @@ const HomeScreen = ({ navigation }) => {
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text style={styles.title}>Bem-Vindo ao AppNews</Text>
         <View style={styles.temperatureContainer}>
-          <Text style={styles.temperatureText}>Temperature: {temperature}°C</Text>
+          <Text style={styles.temperatureText}>Temperatura: {temperature}°C</Text>
           <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('TemperatureDetails')}>
-            <Text style={styles.detailsText}>Mais detalhes</Text>
+            <Text style={styles.detailsText}>Alterar local</Text>
           </TouchableOpacity>
         </View>
         <FlatList
@@ -91,7 +91,7 @@ const AppNavigator = createStackNavigator(
   {
     Home: { screen: HomeScreen },
     NewsDetails: { screen: NewsDetailsScreen, navigationOptions: { title: 'Detalhes da Noticia' } },
-    TemperatureDetails: { screen: TemperatureDetails, navigationOptions: { title: 'Detalhes de Temperatura' } }
+    TemperatureDetails: { screen: TemperatureDetails, navigationOptions: { title: 'Alterar Local' } }
   },
   {
     initialRouteName: 'Home',
