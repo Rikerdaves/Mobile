@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 
 const AtividadesScreen = () => {
   const [atividades, setAtividades] = useState([]);
@@ -19,6 +19,23 @@ const AtividadesScreen = () => {
 
     fetchAtividades();
   }, []);
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulação de um carregamento assíncrono
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 900);
+  }, []);
+
+  if (isLoading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#007bff" />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -51,6 +68,12 @@ const styles = StyleSheet.create({
   atividadeText: {
     fontSize: 16,
     marginBottom: 5,
+  },
+  loadingContainer: {
+    backgroundColor: 'black',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

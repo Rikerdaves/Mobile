@@ -99,6 +99,7 @@ const styles = StyleSheet.create({
     // Adiciona o espaço para a StatusBar
   },
   loadingContainer: {
+    backgroundColor: 'black',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',

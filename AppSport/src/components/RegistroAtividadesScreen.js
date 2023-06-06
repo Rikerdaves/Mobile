@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, Button, StyleSheet,ActivityIndicator } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
 import axios from 'axios';
@@ -54,6 +54,23 @@ const RegistroAtividadesScreen = () => {
         setMensagem('Erro ao salvar o registro');
       });
   };
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulação de um carregamento assíncrono
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 300);
+  }, []);
+
+  if (isLoading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#007bff" />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -132,6 +149,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 16,
     marginTop: 16,
+  },
+  loadingContainer: {
+    backgroundColor: 'black',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

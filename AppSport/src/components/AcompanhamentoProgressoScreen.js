@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { Card, Divider } from 'react-native-elements';
 
@@ -13,6 +13,23 @@ const AcompanhamentoProgressoScreen = () => {
       .then((data) => setAnalise(data))
       .catch((error) => console.error(error));
   }, []);
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulação de um carregamento assíncrono
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, []);
+
+  if (isLoading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#007bff" />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -54,7 +71,7 @@ const AcompanhamentoProgressoScreen = () => {
           <Text style={styles.label}>Total de Tempo: {analise.totalTempo} minutos</Text>
           <Text style={styles.label}>Total de Calorias: {analise.totalCalorias} cal</Text>
           <Text style={styles.label}>Média da Distância: {analise.mediaDistancia} metros</Text>
-          <Text style={styles.label}>Média de Calorias: {analise.mediaCalorias} kcal</Text>
+          <Text style={styles.label}>Média de Calorias: {analise.mediaCalorias} cal</Text>
         </Card>
       )}
     </View>
@@ -86,6 +103,12 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     marginBottom: 8,
+  },
+  loadingContainer: {
+    backgroundColor: 'black',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
