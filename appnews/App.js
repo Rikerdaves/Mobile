@@ -57,7 +57,7 @@ const HomeScreen = ({ navigation }) => {
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text style={styles.title}>Bem-Vindo ao AppNews</Text>
         <View style={styles.temperatureContainer}>
-          <Text style={styles.temperatureText}>Temperatura: {temperature}°C</Text>
+          <Text style={styles.temperatureText}>{city}: {temperature}°C</Text>
           <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('TemperatureDetails')}>
             <Text style={styles.detailsText}>Alterar local</Text>
           </TouchableOpacity>
