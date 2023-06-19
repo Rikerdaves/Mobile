@@ -5,22 +5,24 @@ import { Card, Divider } from 'react-native-elements';
 
 const AcompanhamentoProgressoScreen = () => {
   const [analise, setAnalise] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const formatarTempo = (tempo) => {
+    const horas = Math.floor(tempo / 60);
+    const minutos = Math.floor(tempo % 60);
+    const segundos = Math.floor((tempo % 1) * 60);
+    return `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+  };
 
   useEffect(() => {
     // Fazer a requisição para obter a análise dos dados
     fetch('http://localhost:3000/api/analise')
       .then((response) => response.json())
-      .then((data) => setAnalise(data))
+      .then((data) => {
+        setAnalise(data);
+        setIsLoading(false);
+      })
       .catch((error) => console.error(error));
-  }, []);
-
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    // Simulação de um carregamento assíncrono
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
   }, []);
 
   if (isLoading) {
@@ -34,13 +36,13 @@ const AcompanhamentoProgressoScreen = () => {
   return (
     <View style={styles.container}>
       {analise && (
-        <Card containerStyle={styles.card}>
+        <Card>
           <Text style={styles.title}>Acompanhamento de Progresso</Text>
           <Divider style={styles.divider} />
           <View style={styles.chartContainer}>
             <LineChart
               data={{
-                labels: ['Distância', 'Tempo', 'Calorias'],
+                labels: ['Distância (KM)', 'Tempo (S)', 'Calorias (cal)'],
                 datasets: [
                   {
                     data: [
@@ -54,24 +56,17 @@ const AcompanhamentoProgressoScreen = () => {
               width={300}
               height={200}
               chartConfig={{
-                backgroundColor: '#e26a00',
-                backgroundGradientFrom: 'red',
-                backgroundGradientTo: '#ffa726',
-                decimalPlaces: 0,
-                color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                style: {
-                  borderRadius: 16,
-                },
+                color: () => '#007bff',
               }}
               bezier
             />
           </View>
-          <Text style={styles.label}>Total de Atividades: {analise.totalAtividades}</Text>
-          <Text style={styles.label}>Total de Distância: {analise.totalDistancia} metros</Text>
-          <Text style={styles.label}>Total de Tempo: {analise.totalTempo} minutos</Text>
-          <Text style={styles.label}>Total de Calorias: {analise.totalCalorias} cal</Text>
-          <Text style={styles.label}>Média da Distância: {analise.mediaDistancia} metros</Text>
-          <Text style={styles.label}>Média de Calorias: {analise.mediaCalorias} cal</Text>
+          <Text>Total de Atividades: {analise.totalAtividades}</Text>
+          <Text>Total de Distância: {analise.totalDistancia} KM</Text>
+          <Text>Total de Tempo: {formatarTempo(analise.totalTempo)}</Text>
+          <Text>Total de Calorias: {analise.totalCalorias} cal</Text>
+          <Text>Média da Distância: {analise.mediaDistancia} KM</Text>
+          <Text>Média de Calorias: {analise.mediaCalorias} cal</Text>
         </Card>
       )}
     </View>
@@ -83,10 +78,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     backgroundColor: 'grey',
-  },
-  card: {
-    borderRadius: 8,
-    padding: 16,
   },
   title: {
     fontSize: 18,
@@ -100,12 +91,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 16,
   },
-  label: {
-    fontSize: 16,
-    marginBottom: 8,
-  },
   loadingContainer: {
-    backgroundColor: 'black',
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',

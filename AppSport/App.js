@@ -14,7 +14,6 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulação de um carregamento assíncrono
     setTimeout(() => {
       setIsLoading(false);
     }, 2000);
